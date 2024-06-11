@@ -1,16 +1,18 @@
 package com.example.demo.entity.dto;
 
+
+
 public class SignUpDto {
     private String userName;
     private String password;
     private String fullName;
-    private String email;
 
-    public SignUpDto(String userName, String password, String fullName, String email) {
+
+    public SignUpDto(String userName, String password, String fullName)
+    {
         this.userName = userName;
         this.password = password;
         this.fullName = fullName;
-        this.email = email;
     }
 
     public String getUserName() {
@@ -37,11 +39,5 @@ public class SignUpDto {
         this.fullName = fullName;
     }
 
-    public String getEmail() {
-        return email;
-    }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
 }

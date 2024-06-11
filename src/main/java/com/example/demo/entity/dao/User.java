@@ -2,7 +2,7 @@ package com.example.demo.entity.dao;
 
 import javax.persistence.*;
 
-import com.example.demo.entity.dao.BaseEntity;
+
 
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Entity
@@ -25,6 +25,9 @@ public class User  extends BaseEntity {
 
     @Column(name="email")
     private String email;
+
+    @Column(name="avatar")
+    private String avatar;
 
     @Column(name = "social_id")
     private String socialID;
@@ -67,6 +70,14 @@ public class User  extends BaseEntity {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
     public String getSocialID() {

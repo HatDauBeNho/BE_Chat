@@ -1,11 +1,13 @@
 package com.example.demo.entity.dao;
 
+
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "images")
+
 @EntityListeners(AuditingEntityListener.class)
 public class Image extends BaseEntity {
     @Id

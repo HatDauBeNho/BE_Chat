@@ -13,15 +13,20 @@ public class UserDetailsImpl  implements UserDetails {
     private int userID;
     private String userName;
     private String password;
+    private String fullName;
+    private String avatar;
     private final Collection<? extends GrantedAuthority> authorities;
 
 
-    public UserDetailsImpl(int userID, String userName, String password, Collection<? extends GrantedAuthority> authorities) {
-        this.userID = userID;
-        this.userName = userName;
-        this.password = password;
+    public UserDetailsImpl(int userID, String userName, String password, String fullName,String avatar,Collection<? extends GrantedAuthority> authorities) {
         this.authorities = authorities;
+        this.avatar = avatar;
+        this.fullName = fullName;
+        this.password = password;
+        this.userName = userName;
+        this.userID = userID;
     }
+
     public static UserDetailsImpl build(User user){
         List<GrantedAuthority> authorities = Arrays.asList(new SimpleGrantedAuthority("ROLE_USER"));
 
@@ -29,6 +34,8 @@ public class UserDetailsImpl  implements UserDetails {
                 user.getUserID(),
                 user.getUserName(),
                 user.getPassword(),
+                user.getFullName(),
+                user.getAvatar(),
                 authorities
                 );
     }

@@ -1,5 +1,6 @@
 package com.example.demo.security.config;
 
+import com.example.demo.security.jwt.JwtUtils;
 import com.example.demo.security.service.UserDetailServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -24,6 +25,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder(10);
     }
+
+
+
     @Bean(BeanIds.AUTHENTICATION_MANAGER)
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
@@ -39,7 +43,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     {
         http.authorizeHttpRequests().antMatchers("/api/auth/**").permitAll()
                 .anyRequest().authenticated()
-                .and().csrf().disable();
+                .and().csrf().disable().logout();
 
     }
 }
