@@ -8,14 +8,14 @@ import javax.persistence.*;
 
 
 @Entity
-@Table(name = "group_members")
+@Table(name = "groupMembers")
 
 @EntityListeners(AuditingEntityListener.class)
 public class GroupMember extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "groupMemberId",nullable = false)
-    private int groupMemberID;
+    private int groupMemberId;
 
     @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinColumn(name = "groupId")
@@ -26,11 +26,11 @@ public class GroupMember extends BaseEntity {
     private User user;
 
     public int getGroupMemberID() {
-        return groupMemberID;
+        return groupMemberId;
     }
 
     public void setGroupMemberID(int groupMemberID) {
-        this.groupMemberID = groupMemberID;
+        this.groupMemberId = groupMemberID;
     }
 
     public Group getGroup() {

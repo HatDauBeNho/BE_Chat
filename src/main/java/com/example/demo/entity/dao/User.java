@@ -4,14 +4,14 @@ import javax.persistence.*;
 
 
 
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 @Entity
 @Table(name = "users")
 public class User  extends BaseEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "userId",nullable = false)
-    private int userID;
+    private int userId;
 
     @Column(name = "fullName",nullable = false)
     private String fullName;
@@ -29,14 +29,14 @@ public class User  extends BaseEntity {
     private String avatar;
 
     @Column(name = "socialId")
-    private String socialID;
+    private String socialId;
 
-    public int getUserID() {
-        return userID;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setUserID(int userID) {
-        this.userID = userID;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public String getFullName() {
@@ -79,11 +79,11 @@ public class User  extends BaseEntity {
         this.avatar = avatar;
     }
 
-    public String getSocialID() {
-        return socialID;
+    public String getSocialId() {
+        return socialId;
     }
 
-    public void setSocialID(String socialID) {
-        this.socialID = socialID;
+    public void setSocialId(String socialId) {
+        this.socialId = socialId;
     }
 }

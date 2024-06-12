@@ -1,6 +1,6 @@
 package com.example.demo.custom.users.handle;
 
-public interface FriendInfor {
+public interface FriendInforHandle {
     Integer getUserId();
     String getUserName();
     String getFullName();

@@ -1,4 +1,4 @@
-package com.example.demo.entity.dto;
+package com.example.demo.custom.users.request;
 
 public class UpdateUserRequest {
     private String email;

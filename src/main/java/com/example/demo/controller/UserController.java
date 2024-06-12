@@ -25,26 +25,6 @@ public class UserController {
     @Autowired
     PasswordEncoder passwordEncoder;
 
-    @GetMapping("/list-friend")
-    public ResponseEntity<?> getAllUsers()
-    {
-        try
-        {
-            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-            return  ResponseEntity.ok()
-                    .body(new CustomResponse<>(
-                            1,
-                            userService.getListFriendResponse(userDetails.getUserID()),
-                            "Success get list friend")
-                    );
-        }catch (Exception e){
-            e.printStackTrace();
-            return ResponseEntity.badRequest().body(new CustomResponse<>(0, null, e.getMessage()));
-        }
-
-    }
-
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@RequestBody SignUpDto signUpDto){
 
@@ -65,6 +45,27 @@ public class UserController {
 
         return  ResponseEntity.ok().body(new CustomResponse<>(1, null, "Success register"));
     }
+    @GetMapping("/list-friend")
+    public ResponseEntity<?> getAllUsers()
+    {
+        try
+        {
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+            return  ResponseEntity.ok()
+                    .body(new CustomResponse<>(
+                            1,
+                            userService.getListFriendResponse(userDetails.getUserID()),
+                            "Success get list friend")
+                    );
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body(new CustomResponse<>(0, null, e.getMessage()));
+        }
+
+    }
+
+
 
 //    @PostMapping("/updateUser")
 //    public ResponseEntity<?> updateUser(@RequestBody UpdateUserRequest updateUserRequest)

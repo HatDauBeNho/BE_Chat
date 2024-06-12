@@ -13,10 +13,10 @@ public class Image extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "imageId",nullable = false)
-    private int fileID;
+    private int imageId;
 
-    @Column(name="imageIame",nullable = false)
-    private String fileName;
+    @Column(name="imageName",nullable = false)
+    private String imageName;
 
     @Column(name = "urlImage",nullable = false)
     private String urlImage;
@@ -25,20 +25,20 @@ public class Image extends BaseEntity {
     @JoinColumn(name = "messageId")
     private Message message;
 
-    public int getFileID() {
-        return fileID;
+    public int getImageId() {
+        return imageId;
     }
 
-    public void setFileID(int fileID) {
-        this.fileID = fileID;
+    public void setImageId(int imageId) {
+        this.imageId = imageId;
     }
 
-    public String getFileName() {
-        return fileName;
+    public String getImageName() {
+        return imageName;
     }
 
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
+    public void setImageName(String imageName) {
+        this.imageName = imageName;
     }
 
     public String getUrlImage() {

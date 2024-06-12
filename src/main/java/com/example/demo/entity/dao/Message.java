@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Table (name = "messages")
 public class Message extends BaseEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "messageId",nullable = false)
     private int messageID;
 

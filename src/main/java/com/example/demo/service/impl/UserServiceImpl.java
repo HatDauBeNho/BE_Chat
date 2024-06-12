@@ -1,7 +1,7 @@
 package com.example.demo.service.impl;
 
 import com.example.demo.custom.message.handle.MessageHandle;
-import com.example.demo.custom.users.handle.FriendInfor;
+import com.example.demo.custom.users.handle.FriendInforHandle;
 import com.example.demo.entity.dao.User;
 import com.example.demo.custom.users.response.FriendResponse;
 import com.example.demo.repository.MessageRepository;
@@ -50,12 +50,17 @@ public class UserServiceImpl implements UserService {
     public List<FriendResponse> getListFriendResponse(int userID) {
         try {
             List<FriendResponse> list = new ArrayList<>();
-            List<FriendInfor> listFriendHandle = userRepository.listFriend(userID);
-            for (FriendInfor item : listFriendHandle) {
+            List<FriendInforHandle> listFriendHandle = userRepository.listFriend(userID);
+            for (FriendInforHandle item : listFriendHandle) {
                 Optional<MessageHandle> lastMess = messageRepository.lastMessage(userID, item.getUserId());
                 if (lastMess.isPresent()) {
                     FriendResponse friendResponse = new FriendResponse(
                             lastMess.get().getContent(), lastMess.get().getCreatedAt(), item.getUserId(), item.getFullName(), item.getUserName(), item.getAvatar()
+                    );
+                    list.add(friendResponse);
+                }else {
+                    FriendResponse friendResponse = new FriendResponse(
+                            null, null, item.getUserId(), item.getFullName(), item.getUserName(), item.getAvatar()
                     );
                     list.add(friendResponse);
                 }
