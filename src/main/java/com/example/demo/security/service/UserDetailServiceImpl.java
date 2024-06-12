@@ -3,6 +3,7 @@ package com.example.demo.security.service;
 
 import com.example.demo.entity.dao.User;
 import com.example.demo.service.UserService;
+import com.example.demo.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -13,8 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class UserDetailServiceImpl implements UserDetailsService {
     @Autowired
-    UserService userService;
-
+    private UserService userService;
 
     @Override
     @Transactional

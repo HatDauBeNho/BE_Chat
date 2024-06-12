@@ -14,15 +14,15 @@ import javax.persistence.*;
 public class GroupMember extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "group_member_id",nullable = false)
+    @Column(name = "groupMemberId",nullable = false)
     private int groupMemberID;
 
     @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-    @JoinColumn(name = "group_id")
+    @JoinColumn(name = "groupId")
     private Group group;
 
     @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "userId")
     private User user;
 
     public int getGroupMemberID() {

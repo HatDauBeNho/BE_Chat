@@ -1,19 +1,23 @@
 package com.example.demo.repository;
 
+import com.example.demo.custom.users.handle.FriendInfor;
 import com.example.demo.entity.dao.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
-import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
+@Repository
 public interface UserRepository extends JpaRepository<User,Integer> {
-    @Query("SELECT u FROM User u WHERE u.userName = :username")
+    @Query(value = "SELECT * FROM users WHERE userName = ?1 LIMIT 1", nativeQuery = true)
     Optional<User> findByUsername(String username);
 
-    @Query("SELECT u FROM User u WHERE u.email = :email")
+    @Query(value = "SELECT * FROM users WHERE email = ?1 LIMIT 1", nativeQuery = true)
     Optional<User> findByEmail(String email);
 
-    @Query("UPDATE user u set u.emai:=email,u.avatar:=avatar,u.updatedAt:=time, where u.userID:=userid ")
-    void updateUser(int userid, String email, String avatar, LocalDateTime time);
+
+    @Query(value = "SELECT userId, fullName, avatar FROM users WHERE userId <> ?1", nativeQuery = true)
+    List<FriendInfor> listFriend(int id);
 }

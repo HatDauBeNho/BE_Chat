@@ -13,14 +13,14 @@ import javax.persistence.*;
 public class Group extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "group_id",nullable = false)
+    @Column(name = "groupId",nullable = false)
     private int groupID;
 
-    @Column(name = "group_name",nullable = false)
+    @Column(name = "groupName",nullable = false)
     private String groupName;
 
     @ManyToOne (cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-    @JoinColumn(name = "admin_id",referencedColumnName = "user_id")
+    @JoinColumn(name = "adminId",referencedColumnName = "userId")
     private User admin;
 
     public int getGroupID() {

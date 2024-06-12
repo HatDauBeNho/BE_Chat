@@ -12,17 +12,17 @@ import javax.persistence.*;
 public class Image extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "image_id",nullable = false)
+    @Column(name = "imageId",nullable = false)
     private int fileID;
 
-    @Column(name="image_name",nullable = false)
+    @Column(name="imageIame",nullable = false)
     private String fileName;
 
     @Column(name = "urlImage",nullable = false)
     private String urlImage;
 
     @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-    @JoinColumn(name = "message_id")
+    @JoinColumn(name = "messageId")
     private Message message;
 
     public int getFileID() {

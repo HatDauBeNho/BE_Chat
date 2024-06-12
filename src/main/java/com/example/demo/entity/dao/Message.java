@@ -7,29 +7,34 @@ import javax.persistence.*;
 
 @Entity
 @Table (name = "messages")
-
-@EntityListeners(AuditingEntityListener.class)
-
 public class Message extends BaseEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "message_id",nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "messageId",nullable = false)
     private int messageID;
 
     @ManyToOne (cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-    @JoinColumn(name = "from_user_id",referencedColumnName = "user_id")
-    private User fromUser;
+    @JoinColumn(name = "fromUserId",referencedColumnName = "userId")
+    private User fromUserID;
 
     @ManyToOne (cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-    @JoinColumn(name = "to_user_id",referencedColumnName = "user_id")
-    private User toUser;
+    @JoinColumn(name = "toUserId",referencedColumnName = "userId")
+    private User toUserID;
 
     @ManyToOne (cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-    @JoinColumn(name = "to_group_id",referencedColumnName = "group_id")
-    private Group toGroup;
+    @JoinColumn(name = "toGroupId",referencedColumnName = "groupId")
+    private Group toGroupID;
 
     @Column(name = "content")
     private String content;
+
+    public Message(int messageID, User fromUserID, User toUserID, Group toGroupID, String content) {
+        this.messageID = messageID;
+        this.fromUserID = fromUserID;
+        this.toUserID = toUserID;
+        this.toGroupID = toGroupID;
+        this.content = content;
+    }
 
     public int getMessageID() {
         return messageID;
@@ -39,28 +44,28 @@ public class Message extends BaseEntity {
         this.messageID = messageID;
     }
 
-    public User getFromUser() {
-        return fromUser;
+    public User getFromUserID() {
+        return fromUserID;
     }
 
-    public void setFromUser(User fromUser) {
-        this.fromUser = fromUser;
+    public void setFromUserID(User fromUserID) {
+        this.fromUserID = fromUserID;
     }
 
-    public User getToUser() {
-        return toUser;
+    public User getToUserID() {
+        return toUserID;
     }
 
-    public void setToUser(User toUser) {
-        this.toUser = toUser;
+    public void setToUserID(User toUserID) {
+        this.toUserID = toUserID;
     }
 
-    public Group getToGroup() {
-        return toGroup;
+    public Group getToGroupID() {
+        return toGroupID;
     }
 
-    public void setToGroup(Group toGroup) {
-        this.toGroup = toGroup;
+    public void setToGroupID(Group toGroupID) {
+        this.toGroupID = toGroupID;
     }
 
     public String getContent() {

@@ -7,17 +7,16 @@ import javax.persistence.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Entity
 @Table(name = "users")
-@EntityListeners(AuditingEntityListener.class)
 public class User  extends BaseEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "user_id",nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "userId",nullable = false)
     private int userID;
 
-    @Column(name = "full_name",nullable = false)
+    @Column(name = "fullName",nullable = false)
     private String fullName;
 
-    @Column(name = "user_name",nullable = false)
+    @Column(name = "userName",nullable = false)
     private String userName;
 
     @Column(name = "password", nullable = false)
@@ -29,7 +28,7 @@ public class User  extends BaseEntity {
     @Column(name="avatar")
     private String avatar;
 
-    @Column(name = "social_id")
+    @Column(name = "socialId")
     private String socialID;
 
     public int getUserID() {

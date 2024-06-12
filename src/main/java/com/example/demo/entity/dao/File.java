@@ -11,17 +11,17 @@ import javax.persistence.*;
 public class File extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "file_id",nullable = false)
+    @Column(name = "fileId",nullable = false)
     private int fileID;
 
-    @Column(name="file_name",nullable = false)
+    @Column(name="fileName",nullable = false)
     private String fileName;
 
     @Column(name = "urlFile",nullable = false)
     private String urlFile;
 
     @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-    @JoinColumn(name = "message_id")
+    @JoinColumn(name = "messageId")
     private Message message;
 
     public int getFileID() {
