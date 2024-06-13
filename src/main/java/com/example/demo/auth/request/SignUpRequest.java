@@ -1,14 +1,14 @@
-package com.example.demo.entity.dto;
+package com.example.demo.auth.request;
 
 
 
-public class SignUpDto {
+public class SignUpRequest {
     private String userName;
     private String password;
     private String fullName;
 
 
-    public SignUpDto(String userName, String password, String fullName)
+    public SignUpRequest(String userName, String password, String fullName)
     {
         this.userName = userName;
         this.password = password;

@@ -1,7 +1,7 @@
-package com.example.demo.entity.dto;
+package com.example.demo.auth.request;
 
 
-public class SignInDto {
+public class SignInRequest {
 
     private String userName;
     private String password;

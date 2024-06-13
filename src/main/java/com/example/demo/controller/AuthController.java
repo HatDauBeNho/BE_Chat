@@ -1,12 +1,11 @@
 package com.example.demo.controller;
 import com.example.demo.entity.dao.User;
-import com.example.demo.entity.dto.CustomResponse;
-import com.example.demo.entity.dto.SignInDto;
-import com.example.demo.entity.dto.SignInResponse;
+import com.example.demo.auth.response.CustomResponse;
+import com.example.demo.auth.request.SignInRequest;
+import com.example.demo.auth.response.SignInResponse;
 import com.example.demo.security.jwt.JwtUtils;
 import com.example.demo.security.service.UserDetailsImpl;
 import com.example.demo.service.UserService;
-import com.example.demo.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -36,15 +35,15 @@ public class AuthController {
 
     @PostMapping("/signin")
     @Transactional
-    public ResponseEntity<?> authenticateUser(@RequestBody SignInDto signInDto){
+    public ResponseEntity<?> authenticateUser(@RequestBody SignInRequest signInRequest){
         try
         {
-            Optional<User> userOptional = userService.findUserByName(signInDto.getUserName());
+            Optional<User> userOptional = userService.findUserByName(signInRequest.getUserName());
             if (userOptional.isEmpty()){
                 return ResponseEntity.badRequest().body(new CustomResponse<>(0, null, "login failed!"));
             }
             Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(signInDto.getUserName(), signInDto.getPassword()));
+                    new UsernamePasswordAuthenticationToken(signInRequest.getUserName(), signInRequest.getPassword()));
             SecurityContextHolder.getContext().setAuthentication(authentication);
             UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
             String jwt = jwtUtils.generateJwtToken(authentication);

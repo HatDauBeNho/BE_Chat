@@ -1,4 +1,4 @@
-package com.example.demo.entity.dto;
+package com.example.demo.auth.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

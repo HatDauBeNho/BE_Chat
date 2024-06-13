@@ -1,4 +1,4 @@
-package com.example.demo.entity.dto;
+package com.example.demo.auth.response;
 
 
 public class CustomResponse<T> {

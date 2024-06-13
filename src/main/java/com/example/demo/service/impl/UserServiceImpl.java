@@ -1,18 +1,30 @@
 package com.example.demo.service.impl;
 
+import com.example.demo.auth.response.CustomResponse;
 import com.example.demo.custom.message.handle.MessageHandle;
 import com.example.demo.custom.users.handle.FriendInforHandle;
 import com.example.demo.entity.dao.User;
 import com.example.demo.custom.users.response.FriendResponse;
 import com.example.demo.repository.MessageRepository;
 import com.example.demo.repository.UserRepository;
+import com.example.demo.service.FileStorageService;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -21,6 +33,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     MessageRepository messageRepository;
+
+    @Autowired
+    FileStorageService fileStorageService;
 
     @Override
     public Optional<User> findUserByName(String name) {
@@ -32,10 +47,19 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByEmail(email);
     }
 
-    //    public void updateUser(int id, String email, String avatar, LocalDateTime time)
-//    {
-//        userRepository.updateUser(id,email,avatar,time);
-//    }
+    @Override
+    public boolean updateUser(int userId, String fullName, MultipartFile avatar, String email) throws IOException
+    {
+        String uuid = UUID.randomUUID().toString();
+        if (fileStorageService.saveAvatar(avatar,uuid))
+        {
+            String avatarUrl="/api/images/avatar/"+uuid;
+            LocalDateTime updatedAt = LocalDateTime.parse(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+            userRepository.updateUser(userId,fullName, avatarUrl, email,updatedAt);
+            return true;
+        }
+        return false;
+    }
     @Override
     public List<User> findAll() {
         return userRepository.findAll();

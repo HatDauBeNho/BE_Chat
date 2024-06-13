@@ -1,8 +1,27 @@
 package com.example.demo.custom.users.request;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class UpdateUserRequest {
+    private String fullName;
+    private MultipartFile avatar;
     private String email;
-    private String avatar;
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public MultipartFile getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(MultipartFile avatar) {
+        this.avatar = avatar;
+    }
 
     public String getEmail() {
         return email;
@@ -12,16 +31,9 @@ public class UpdateUserRequest {
         this.email = email;
     }
 
-    public String getAvatar() {
-        return avatar;
-    }
-
-    public void setAvatar(String avatar) {
+    public UpdateUserRequest(String fullName, MultipartFile avatar, String email) {
+        this.fullName = fullName;
         this.avatar = avatar;
-    }
-
-    public UpdateUserRequest(String email, String avatar) {
         this.email = email;
-        this.avatar = avatar;
     }
 }
