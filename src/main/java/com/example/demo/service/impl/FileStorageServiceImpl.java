@@ -18,6 +18,7 @@ import java.nio.file.Path;
 public class FileStorageServiceImpl implements FileStorageService {
     @Autowired
     private PathFile pathFile;
+
     @Override
     public void initAvatarResources() {
         try {

@@ -10,6 +10,7 @@ import java.util.Optional;
 
 @Repository
 public interface MessageRepository extends JpaRepository<Message,Integer> {
+
     @Query (value = "SELECT * FROM messages " +
             "WHERE (fromUserId = ?1 AND toUserId = ?2) " +
             "OR (fromUserId = ?2 AND toUserId = ?1) " +

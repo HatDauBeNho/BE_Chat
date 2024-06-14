@@ -1,8 +1,8 @@
 package com.example.demo.controller;
 import com.example.demo.entity.dao.User;
-import com.example.demo.auth.response.CustomResponse;
-import com.example.demo.auth.request.SignInRequest;
-import com.example.demo.auth.response.SignInResponse;
+import com.example.demo.custom.auth.response.CustomResponse;
+import com.example.demo.custom.auth.request.SignInRequest;
+import com.example.demo.custom.auth.response.SignInResponse;
 import com.example.demo.security.jwt.JwtUtils;
 import com.example.demo.security.service.UserDetailsImpl;
 import com.example.demo.service.UserService;

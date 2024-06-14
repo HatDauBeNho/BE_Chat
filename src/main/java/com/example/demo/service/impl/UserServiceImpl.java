@@ -1,6 +1,5 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.auth.response.CustomResponse;
 import com.example.demo.custom.message.handle.MessageHandle;
 import com.example.demo.custom.users.handle.FriendInforHandle;
 import com.example.demo.entity.dao.User;
@@ -10,14 +9,8 @@ import com.example.demo.repository.UserRepository;
 import com.example.demo.service.FileStorageService;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -60,6 +53,12 @@ public class UserServiceImpl implements UserService {
         }
         return false;
     }
+
+    @Override
+    public Optional<User> getUserInfor(int userId) {
+        return userRepository.getUserInfor(userId);
+    }
+
     @Override
     public List<User> findAll() {
         return userRepository.findAll();

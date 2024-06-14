@@ -1,4 +1,4 @@
-package com.example.demo.auth.response;
+package com.example.demo.custom.auth.response;
 
 
 public class CustomResponse<T> {

@@ -27,4 +27,7 @@ public interface UserRepository extends JpaRepository<User,Integer> {
             "UPDATE users SET fullName = ?2, avatar = ?3,email = ?4,updatedAt = ?5 where userId = ?1",
             nativeQuery = true)
     void updateUser(int userId,String fullName, String avatar, String email, LocalDateTime time);
+
+    @Query(value = "GET userName,fullName,avatar FROM users where userId=?1",nativeQuery = true)
+    Optional<User> getUserInfor(int userId);
 }

@@ -20,4 +20,7 @@ public interface UserService {
     Optional<User> findUserByEmail(String email);
 
     boolean updateUser(int userId, String fullName, MultipartFile avatar, String email) throws IOException;
+
+    Optional<User> getUserInfor(int userId);
+
 }

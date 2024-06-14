@@ -1,10 +1,18 @@
 package com.example.demo.custom.users.request;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import org.hibernate.annotations.Parent;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.constraints.Pattern;
+
 public class UpdateUserRequest {
+    @Pattern(regexp = "^[\\p{L} '-]+$")
     private String fullName;
+
     private MultipartFile avatar;
+
+    @Pattern(regexp = ".*@gmail\\.com$")
     private String email;
 
     public String getFullName() {

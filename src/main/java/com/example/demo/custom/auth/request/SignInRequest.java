@@ -1,4 +1,4 @@
-package com.example.demo.auth.request;
+package com.example.demo.custom.auth.request;
 
 
 public class SignInRequest {
