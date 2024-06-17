@@ -18,11 +18,11 @@ public class GroupMember extends BaseEntity {
     private int groupMemberId;
 
     @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-    @JoinColumn(name = "groupId")
+    @JoinColumn(name = "groupId",nullable = false)
     private Group group;
 
     @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-    @JoinColumn(name = "userId")
+    @JoinColumn(name = "userId",nullable = false)
     private User user;
 
     public int getGroupMemberID() {

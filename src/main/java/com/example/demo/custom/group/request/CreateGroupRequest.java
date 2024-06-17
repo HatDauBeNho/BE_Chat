@@ -6,7 +6,12 @@ import java.util.List;
 
 public class CreateGroupRequest {
     private String groupName;
-    private List<User> members;
+    private List<Integer> members;
+
+    public CreateGroupRequest(String groupName, List<Integer> members) {
+        this.groupName = groupName;
+        this.members = members;
+    }
 
     public String getGroupName() {
         return groupName;
@@ -16,16 +21,11 @@ public class CreateGroupRequest {
         this.groupName = groupName;
     }
 
-    public List<User> getMembers() {
+    public List<Integer> getMembers() {
         return members;
     }
 
-    public void setMembers(List<User> members) {
-        this.members = members;
-    }
-
-    public CreateGroupRequest(String groupName, List<User> members) {
-        this.groupName = groupName;
+    public void setMembers(List<Integer> members) {
         this.members = members;
     }
 }

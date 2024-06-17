@@ -60,6 +60,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Optional<User> findUserById(int id) {
+        return userRepository.findById(id);
+    }
+
+    @Override
     public List<User> findAll() {
         return userRepository.findAll();
     }
