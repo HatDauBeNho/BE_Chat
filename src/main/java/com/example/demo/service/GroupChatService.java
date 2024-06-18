@@ -1,7 +1,6 @@
 package com.example.demo.service;
 
-import com.example.demo.custom.group.response.UserNotInGroupReponse;
-import com.example.demo.custom.users.response.UserInforResponse;
+import com.example.demo.custom.group.handle.UserNotInGroupHandle;
 import com.example.demo.entity.dao.Group;
 
 import java.util.List;
@@ -14,6 +13,6 @@ public interface GroupChatService {
 
     Optional<Group> lastGroup();
 
-    List<UserNotInGroupReponse> getListFriendNotInGroup(int groupId);
+    List<UserNotInGroupHandle> getListFriendNotInGroup(int groupId);
 
 }

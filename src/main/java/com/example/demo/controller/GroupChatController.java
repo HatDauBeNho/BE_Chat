@@ -96,8 +96,7 @@ public class GroupChatController {
     {
         try
         {
-            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+           
             return  ResponseEntity.ok()
                     .body(new CustomResponse<>(
                             1,

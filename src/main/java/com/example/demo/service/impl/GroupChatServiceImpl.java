@@ -1,7 +1,6 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.custom.group.response.UserNotInGroupReponse;
-import com.example.demo.custom.users.response.UserInforResponse;
+import com.example.demo.custom.group.handle.UserNotInGroupHandle;
 import com.example.demo.entity.dao.Group;
 import com.example.demo.repository.GroupChatRepository;
 import com.example.demo.service.GroupChatService;
@@ -30,7 +29,7 @@ public class GroupChatServiceImpl implements GroupChatService {
     }
 
     @Override
-    public List<UserNotInGroupReponse> getListFriendNotInGroup(int groupId) {
+    public List<UserNotInGroupHandle> getListFriendNotInGroup(int groupId) {
         return groupChatRepository.getListFriendNotInGroup(groupId);
     }
 

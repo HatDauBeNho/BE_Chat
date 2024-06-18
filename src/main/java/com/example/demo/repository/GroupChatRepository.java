@@ -1,8 +1,7 @@
 package com.example.demo.repository;
 
 import com.example.demo.custom.group.handle.GroupInforHandle;
-import com.example.demo.custom.group.response.UserNotInGroupReponse;
-import com.example.demo.custom.users.response.UserInforResponse;
+import com.example.demo.custom.group.handle.UserNotInGroupHandle;
 import com.example.demo.entity.dao.Group;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -27,5 +26,5 @@ public interface GroupChatRepository extends JpaRepository<Group,Integer> {
             "FROM users u " +
             "WHERE u.userId " +
             "NOT IN (SELECT gm.userId  FROM groupMembers gm WHERE gm.groupId = ?1)",nativeQuery = true)
-    List<UserNotInGroupReponse> getListFriendNotInGroup(int groupId);
+    List<UserNotInGroupHandle> getListFriendNotInGroup(int groupId);
 }
