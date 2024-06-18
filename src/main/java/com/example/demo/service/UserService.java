@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.custom.users.handle.FriendInforHandle;
 import com.example.demo.entity.dao.User;
 import com.example.demo.custom.users.response.FriendResponse;
 import org.springframework.web.multipart.MultipartFile;
@@ -13,8 +14,7 @@ public interface UserService {
 
     User createUser(User user);
 
-    List<FriendResponse> getListFriendResponse(int userID);
-
+    List<FriendInforHandle> listFriend(int id);
     Optional<User> findUserByName(String name);
 
     Optional<User> findUserByEmail(String email);

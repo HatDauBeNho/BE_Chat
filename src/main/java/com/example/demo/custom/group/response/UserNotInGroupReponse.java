@@ -1,22 +1,22 @@
-package com.example.demo.custom.users.response;
+package com.example.demo.custom.group.response;
 
-public class UserInforResponse {
-    private String userName;
+public class UserNotInGroupReponse {
+    private int userId;
     private String fullName;
     private String avatar;
 
-    public UserInforResponse(String userName, String fullName, String avatar) {
-        this.userName = userName;
+    public UserNotInGroupReponse(int userId, String fullName, String avatar) {
+        this.userId = userId;
         this.fullName = fullName;
         this.avatar = avatar;
     }
 
-    public String getUserName() {
-        return userName;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public String getFullName() {

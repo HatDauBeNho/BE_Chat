@@ -13,6 +13,6 @@ import java.util.Optional;
 public interface GroupMemberRepository extends JpaRepository<GroupMember,Integer> {
 //    @Query(value = "SELECT * FROM groups  ORDER BY createdAt DESC LIMIT 1",nativeQuery = true)
 //    Optional<GroupMember> findByGroup
-    @Query(value = "SELECT usedId FROM groupMembers where groupId=?1",nativeQuery = true)
+    @Query(value = "SELECT userId FROM groupMembers where groupId=?1",nativeQuery = true)
     List<Integer> findUserIdInOneGroup(int groupId);
 }

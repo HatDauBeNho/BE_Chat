@@ -75,27 +75,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<FriendResponse> getListFriendResponse(int userID) {
-        try {
-            List<FriendResponse> list = new ArrayList<>();
-            List<FriendInforHandle> listFriendHandle = userRepository.listFriend(userID);
-            for (FriendInforHandle item : listFriendHandle) {
-                Optional<MessageHandle> lastMess = messageRepository.lastMessage(userID, item.getUserId());
-                if (lastMess.isPresent()) {
-                    FriendResponse friendResponse = new FriendResponse(
-                            lastMess.get().getContent(), lastMess.get().getCreatedAt(), item.getUserId(), item.getFullName(), item.getUserName(), item.getAvatar()
-                    );
-                    list.add(friendResponse);
-                }else {
-                    FriendResponse friendResponse = new FriendResponse(
-                            null, null, item.getUserId(), item.getFullName(), item.getUserName(), item.getAvatar()
-                    );
-                    list.add(friendResponse);
-                }
-            }
-            return list;
-        } catch (Exception e) {
-            throw new RuntimeException("Failed to get list friend response. Error: " + e.getMessage());
-        }
+    public List<FriendInforHandle> listFriend(int id) {
+        return userRepository.listFriend(id);
     }
+
+
 }

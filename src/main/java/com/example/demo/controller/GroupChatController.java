@@ -15,10 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.swing.text.html.Option;
 import javax.transaction.Transactional;
@@ -77,20 +74,39 @@ public class GroupChatController {
                 groupMember.setCreatedAt(time);
                 groupMemberService.createGroupMember(groupMember);
             }
-//            System.out.println(groupMemberService.findUserIdInOneGroup(group.getGroupID()));
             return  ResponseEntity.ok()
                     .body(new CustomResponse<>(
-                            1,null,
-//                            new CreateGroupResponse(
-//                                    group.getGroupID(),group.getGroupName(),group.getAdmin().getUserId(),
-//                                    groupMemberService.findUserIdInOneGroup(group.getGroupID()),time
-//                            ),
+                            1,
+                            new CreateGroupResponse(
+                                    group.getGroupID(),group.getGroupName(),group.getAdmin().getUserId(),
+                                    groupMemberService.findUserIdInOneGroup(group.getGroupID()),time
+                            ),
                             "Success create group")
                     );
 
         }catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.badRequest().body(new CustomResponse<>(0, e.getMessage(), null));
+        }
+    }
+
+
+    @GetMapping("/{groupId}")
+    public ResponseEntity<?> getListFriendNotInGroup(@PathVariable("groupId") Integer groupId)
+    {
+        try
+        {
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+            return  ResponseEntity.ok()
+                    .body(new CustomResponse<>(
+                            1,
+                            groupChatService.getListFriendNotInGroup(groupId),
+                            "Success get list friend not in group")
+                    );
+        }catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body(new CustomResponse<>(0, null, e.getMessage()));
         }
     }
 }

@@ -7,5 +7,5 @@ import java.util.Optional;
 
 public interface GroupMemberService {
     GroupMember createGroupMember(GroupMember groupMember);
-    List<Integer> findUserIdInOneGroup(int groupdId);
+    List<Integer> findUserIdInOneGroup(int groupId);
 }

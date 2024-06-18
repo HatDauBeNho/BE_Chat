@@ -16,5 +16,11 @@ public interface MessageRepository extends JpaRepository<Message,Integer> {
             "OR (fromUserId = ?2 AND toUserId = ?1) " +
             "ORDER BY createdAt DESC " +
             "LIMIT 1", nativeQuery = true)
-    Optional<MessageHandle> lastMessage(int id1, int id2);
+    Optional<MessageHandle> lastFriendMessage(int id1, int id2);
+
+    @Query (value = "SELECT * FROM messages " +
+            "WHERE toGroupId=?1 " +
+            "ORDER BY createdAt DESC "+
+            "LIMIT 1",nativeQuery = true)
+    Optional<MessageHandle> lastGroupMessage(int groupId);
 }

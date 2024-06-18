@@ -5,19 +5,32 @@ import java.time.LocalDateTime;
 public class FriendResponse {
     private String content;
     private LocalDateTime createdAt;
-    private int friendID;
+    private int fromUserId;
+    private int toUserId;
+    private int toGroupId;
     private String fullName;
     private String userName;
+    private String groupName;
     private String avatar;
 
-    public FriendResponse(String content, LocalDateTime createdAt, int friendID, String fullName, String userName, String avatar) {
-        this.content = content;
-        this.createdAt = createdAt;
-        this.friendID = friendID;
-        this.fullName = fullName;
-        this.userName = userName;
-        this.avatar = avatar;
+    public String getGroupName() {
+        return groupName;
     }
+
+    public void setGroupName(String groupName) {
+        this.groupName = groupName;
+    }
+
+//    public FriendResponse(String content, LocalDateTime createdAt, int fromUserId, int toUserId, int toGroupId, String fullName, String userName, String avatar) {
+//        this.content = content;
+//        this.createdAt = createdAt;
+//        this.fromUserId = fromUserId;
+//        this.toUserId = toUserId;
+//        this.toGroupId = toGroupId;
+//        this.fullName = fullName;
+//        this.userName = userName;
+//        this.avatar = avatar;
+//    }
 
     public String getContent() {
         return content;
@@ -35,12 +48,28 @@ public class FriendResponse {
         this.createdAt = createdAt;
     }
 
-    public int getFriendID() {
-        return friendID;
+    public int getFromUserId() {
+        return fromUserId;
     }
 
-    public void setFriendID(int friendID) {
-        this.friendID = friendID;
+    public void setFromUserId(int fromUserId) {
+        this.fromUserId = fromUserId;
+    }
+
+    public int getToUserId() {
+        return toUserId;
+    }
+
+    public void setToUserId(int toUserId) {
+        this.toUserId = toUserId;
+    }
+
+    public int getToGroupId() {
+        return toGroupId;
+    }
+
+    public void setToGroupId(int toGroupId) {
+        this.toGroupId = toGroupId;
     }
 
     public String getFullName() {

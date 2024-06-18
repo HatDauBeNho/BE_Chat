@@ -14,7 +14,7 @@ public class Group extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "groupId",nullable = false)
-    private int groupID;
+    private int groupId;
 
     @Column(name = "groupName",nullable = false)
     private String groupName;
@@ -24,11 +24,11 @@ public class Group extends BaseEntity {
     private User admin;
 
     public int getGroupID() {
-        return groupID;
+        return groupId;
     }
 
     public void setGroupID(int groupID) {
-        this.groupID = groupID;
+        this.groupId = groupID;
     }
 
     public String getGroupName() {

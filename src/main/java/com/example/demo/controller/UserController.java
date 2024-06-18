@@ -81,25 +81,7 @@ public class UserController {
         }
 
     }
-    @GetMapping("/listFriend")
-    public ResponseEntity<?> getAllUsers()
-    {
-        try
-        {
-            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-            return  ResponseEntity.ok()
-                    .body(new CustomResponse<>(
-                            1,
-                            userService.getListFriendResponse(userDetails.getUserID()),
-                            "Success get list friend")
-                    );
-        }catch (Exception e){
-            e.printStackTrace();
-            return ResponseEntity.badRequest().body(new CustomResponse<>(0, null, e.getMessage()));
-        }
 
-    }
 
 
 

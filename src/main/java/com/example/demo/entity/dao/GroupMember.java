@@ -25,12 +25,12 @@ public class GroupMember extends BaseEntity {
     @JoinColumn(name = "userId",nullable = false)
     private User user;
 
-    public int getGroupMemberID() {
+    public int getGroupMemberId() {
         return groupMemberId;
     }
 
-    public void setGroupMemberID(int groupMemberID) {
-        this.groupMemberId = groupMemberID;
+    public void setGroupMemberId(int groupMemberId) {
+        this.groupMemberId = groupMemberId;
     }
 
     public Group getGroup() {
