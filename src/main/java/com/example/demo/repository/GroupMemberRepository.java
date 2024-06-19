@@ -15,4 +15,6 @@ public interface GroupMemberRepository extends JpaRepository<GroupMember,Integer
 //    Optional<GroupMember> findByGroup
     @Query(value = "SELECT userId FROM groupMembers where groupId=?1",nativeQuery = true)
     List<Integer> findUserIdInOneGroup(int groupId);
+
+
 }

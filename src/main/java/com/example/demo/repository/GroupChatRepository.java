@@ -27,4 +27,5 @@ public interface GroupChatRepository extends JpaRepository<Group,Integer> {
             "WHERE u.userId " +
             "NOT IN (SELECT gm.userId  FROM groupMembers gm WHERE gm.groupId = ?1)",nativeQuery = true)
     List<UserNotInGroupHandle> getListFriendNotInGroup(int groupId);
+
 }

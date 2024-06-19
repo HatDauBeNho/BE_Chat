@@ -13,11 +13,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 import java.util.Optional;
 
@@ -59,5 +57,15 @@ public class AuthController {
         }
 
     }
+    @DeleteMapping("/logout")
+    public ResponseEntity<?> logout() {
+        try {
+            SecurityContextHolder.clearContext();
+            return ResponseEntity.ok().body(new CustomResponse<>(1, null, "Logout successful"));
 
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body(new CustomResponse<>(0, null, "Logout failed"));
+        }
+    }
 }

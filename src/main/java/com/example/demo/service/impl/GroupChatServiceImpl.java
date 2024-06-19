@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 @Service
+
 public class GroupChatServiceImpl implements GroupChatService {
     @Autowired
     GroupChatRepository groupChatRepository;
@@ -31,6 +32,11 @@ public class GroupChatServiceImpl implements GroupChatService {
     @Override
     public List<UserNotInGroupHandle> getListFriendNotInGroup(int groupId) {
         return groupChatRepository.getListFriendNotInGroup(groupId);
+    }
+
+    @Override
+    public Optional<Group> findByGroupId(int groupId) {
+        return groupChatRepository.findById(groupId);
     }
 
 }

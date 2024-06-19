@@ -2,11 +2,13 @@ package com.example.demo.controller;
 
 import com.example.demo.custom.auth.response.CustomResponse;
 import com.example.demo.custom.auth.response.SignInResponse;
+import com.example.demo.custom.group.request.AddMemberToGroupRequest;
 import com.example.demo.custom.group.request.CreateGroupRequest;
 import com.example.demo.custom.group.response.CreateGroupResponse;
 import com.example.demo.entity.dao.Group;
 import com.example.demo.entity.dao.GroupMember;
 import com.example.demo.entity.dao.User;
+import com.example.demo.repository.GroupMemberRepository;
 import com.example.demo.security.service.UserDetailsImpl;
 import com.example.demo.service.GroupChatService;
 import com.example.demo.service.GroupMemberService;
@@ -22,10 +24,11 @@ import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/message/group")
+@RequestMapping("/api/message")
 public class GroupChatController {
     @Autowired
     private GroupChatService groupChatService;
@@ -34,9 +37,12 @@ public class GroupChatController {
     private GroupMemberService groupMemberService;
 
     @Autowired
+    private GroupMemberRepository groupMemberRepository;
+
+    @Autowired
     private UserService userService;
 
-    @PostMapping("")
+    @PostMapping("/createGroup")
     @Transactional
     public ResponseEntity<?> createGroupChat(@RequestBody CreateGroupRequest createGroupRequest)
     {
@@ -96,12 +102,57 @@ public class GroupChatController {
     {
         try
         {
-           
+           Optional<Group> optionalGroup=groupChatService.findByGroupId(groupId);
+           if (optionalGroup.isEmpty())
+           {
+               return ResponseEntity.badRequest().body(new CustomResponse<>(0, null,"Group is not exits"));
+           }
             return  ResponseEntity.ok()
                     .body(new CustomResponse<>(
                             1,
                             groupChatService.getListFriendNotInGroup(groupId),
                             "Success get list friend not in group")
+                    );
+        }catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body(new CustomResponse<>(0, null, e.getMessage()));
+        }
+    }
+    @PostMapping("/group")
+    @Transactional
+    public ResponseEntity<?> addMemberToGroup(@RequestBody AddMemberToGroupRequest request)
+    {
+        try
+        {
+            Optional<Group> optionalGroup=groupChatService.findByGroupId(request.getGroupId());
+            if (optionalGroup.isEmpty())
+            {
+                return ResponseEntity.badRequest().body(new CustomResponse<>(0, null,"Group is not exits"));
+            }
+
+            LocalDateTime time = LocalDateTime.parse(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+            for (Integer item: request.getMembers())
+            {
+                if (groupMemberService.findUserIdInOneGroup(request.getGroupId()).contains(item))
+                {
+                    return ResponseEntity.badRequest().body(new CustomResponse<>(0, null,"User already in group"));
+                }
+                Optional<User>  userOptional=userService.findUserById(item);
+                if (userOptional.isEmpty())
+                {
+                    return ResponseEntity.badRequest().body(new CustomResponse<>(0, null,"User is not exits"));
+                }
+                GroupMember groupMember=new GroupMember();
+                groupMember.setUser(userOptional.get());
+                groupMember.setGroup(optionalGroup.get());
+                groupMember.setCreatedAt(time);
+                groupMemberService.createGroupMember(groupMember);
+            }
+            return  ResponseEntity.ok()
+                    .body(new CustomResponse<>(
+                            1,
+                            null,
+                            "Success add member")
                     );
         }catch (Exception e) {
             e.printStackTrace();

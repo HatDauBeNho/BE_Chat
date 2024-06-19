@@ -15,4 +15,6 @@ public interface GroupChatService {
 
     List<UserNotInGroupHandle> getListFriendNotInGroup(int groupId);
 
+    Optional<Group> findByGroupId(int groupId);
+
 }
