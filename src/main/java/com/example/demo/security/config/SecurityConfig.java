@@ -41,13 +41,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     @Override
     protected void configure(HttpSecurity http) throws Exception
     {
-        http.authorizeHttpRequests().antMatchers("/api/**").permitAll()
-//                .and().authorizeHttpRequests().antMatchers("/api/user/signup").permitAll()
-//                .and().authorizeHttpRequests().antMatchers("/api/user/**").hasAnyAuthority("ROLE_USER")
-//                .and().authorizeHttpRequests().antMatchers("/api/message/**").hasAnyAuthority("ROLE_USER")
+        http.authorizeHttpRequests().antMatchers("/api/auth/signin").permitAll()
+                .and().authorizeHttpRequests().antMatchers("/api/user/signup").permitAll()
+                .and().authorizeHttpRequests().antMatchers("/api/user/**").hasAnyAuthority("ROLE_USER")
+                .and().authorizeHttpRequests().antMatchers("/api/message/**").hasAnyAuthority("ROLE_USER")
                 .anyRequest().authenticated()
                 .and().csrf().disable()
                 .logout();
-
     }
 }

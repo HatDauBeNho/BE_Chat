@@ -22,4 +22,9 @@ public class GroupMemberServiceImpl implements GroupMemberService {
     public List<Integer> findUserIdInOneGroup(int groupId) {
         return groupMemberRepository.findUserIdInOneGroup(groupId);
     }
+
+    @Override
+    public void deleteGroupMember(int groupId, int userId) {
+        groupMemberRepository.deleteGroupMember(groupId,userId);
+    }
 }

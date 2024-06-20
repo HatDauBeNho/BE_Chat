@@ -1,8 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.custom.auth.response.CustomResponse;
-import com.example.demo.custom.auth.response.SignInResponse;
-import com.example.demo.custom.group.request.AddMemberToGroupRequest;
+import com.example.demo.custom.group.request.MemberAndGroupActionRequest;
 import com.example.demo.custom.group.request.CreateGroupRequest;
 import com.example.demo.custom.group.response.CreateGroupResponse;
 import com.example.demo.entity.dao.Group;
@@ -19,12 +18,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-import javax.swing.text.html.Option;
 import javax.transaction.Transactional;
-import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -97,7 +93,7 @@ public class GroupChatController {
     }
 
 
-    @GetMapping("/{groupId}")
+    @GetMapping("/group/{groupId}")
     public ResponseEntity<?> getListFriendNotInGroup(@PathVariable("groupId") Integer groupId)
     {
         try
@@ -120,7 +116,7 @@ public class GroupChatController {
     }
     @PostMapping("/group")
     @Transactional
-    public ResponseEntity<?> addMemberToGroup(@RequestBody AddMemberToGroupRequest request)
+    public ResponseEntity<?> addMemberToGroup(@RequestBody MemberAndGroupActionRequest request)
     {
         try
         {
@@ -148,12 +144,40 @@ public class GroupChatController {
                 groupMember.setCreatedAt(time);
                 groupMemberService.createGroupMember(groupMember);
             }
-            return  ResponseEntity.ok()
-                    .body(new CustomResponse<>(
-                            1,
-                            null,
-                            "Success add member")
-                    );
+            return  ResponseEntity.ok().body(new CustomResponse<>(1,null,"Success add member"));
+        }catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body(new CustomResponse<>(0, null, e.getMessage()));
+        }
+    }
+
+    @DeleteMapping("/group")
+    public ResponseEntity<?> deleteMemberFromGroup(@RequestBody MemberAndGroupActionRequest request)
+    {
+        try
+        {
+            Optional<Group> optionalGroup=groupChatService.findByGroupId(request.getGroupId());
+            if (optionalGroup.isEmpty())
+            {
+                return ResponseEntity.badRequest().body(new CustomResponse<>(0, null,"Group is not exits"));
+            }
+            for (Integer item: request.getMembers())
+            {
+
+                Optional<User>  userOptional=userService.findUserById(item);
+                if (userOptional.isEmpty())
+                {
+                    return ResponseEntity.badRequest().body(new CustomResponse<>(0, null,"User is not exits"));
+                }
+                if (groupMemberService.findUserIdInOneGroup(request.getGroupId()).contains(item))
+                {
+                    groupMemberService.deleteGroupMember(request.getGroupId(),userOptional.get().getUserId());
+
+                }else  return ResponseEntity.badRequest().body(new CustomResponse<>(0, null,"User isn't in group"));
+
+            }
+            return  ResponseEntity.ok().body(new CustomResponse<>(1,null,"Success delete member"));
+
         }catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.badRequest().body(new CustomResponse<>(0, null, e.getMessage()));

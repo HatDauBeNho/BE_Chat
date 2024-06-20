@@ -1,14 +1,12 @@
 package com.example.demo.custom.group.request;
 
-import com.example.demo.entity.dao.User;
-
 import java.util.List;
 
-public class AddMemberToGroupRequest {
+public class MemberAndGroupActionRequest {
     private int groupId;
     private List<Integer> members;
 
-    public AddMemberToGroupRequest(int groupId, List<Integer> members) {
+    public MemberAndGroupActionRequest(int groupId, List<Integer> members) {
         this.groupId = groupId;
         this.members = members;
     }
