@@ -59,11 +59,11 @@ public class GroupChatController {
 
             groupChatService.createGroup(group);
 
-            GroupMember groupMember1=new GroupMember();
-            groupMember1.setGroup(group);
-            groupMember1.setUser(userService.findUserById(userDetails.getUserID()).get());
-            groupMember1.setCreatedAt(time);
-            groupMemberService.createGroupMember(groupMember1);
+            GroupMember admin=new GroupMember();
+            admin.setGroup(group);
+            admin.setUser(userService.findUserById(userDetails.getUserID()).get());
+            admin.setCreatedAt(time);
+            groupMemberService.createGroupMember(admin);
             for (Integer item:createGroupRequest.getMembers())
             {
                 Optional<User> friendOptional= userService.findUserById(item);
@@ -114,6 +114,7 @@ public class GroupChatController {
             return ResponseEntity.badRequest().body(new CustomResponse<>(0, null, e.getMessage()));
         }
     }
+
     @PostMapping("/group")
     @Transactional
     public ResponseEntity<?> addMemberToGroup(@RequestBody MemberAndGroupActionRequest request)

@@ -1,4 +1,5 @@
 package com.example.demo.controller;
+import com.example.demo.custom.auth.request.SignUpRequest;
 import com.example.demo.entity.dao.User;
 import com.example.demo.custom.auth.response.CustomResponse;
 import com.example.demo.custom.auth.request.SignInRequest;
@@ -13,10 +14,15 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.util.StringUtils;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
+import javax.validation.Valid;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 @RestController
@@ -54,6 +60,49 @@ public class AuthController {
         }catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.badRequest().body(new CustomResponse<>(0, null, "login failed!"));
+        }
+
+    }
+
+    @PostMapping("/signup")
+    @Transactional
+    public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpRequest signUpRequest, Errors errors){
+        try
+        {
+            if (errors.hasErrors()) {
+                return ResponseEntity.badRequest().body(new CustomResponse<>(0, null, "Incorrect password format"));
+            }
+            if (StringUtils.countOccurrencesOf(signUpRequest.getPassword(), " ") > 0) {
+                return ResponseEntity.badRequest().body(new CustomResponse<>(0, null, "Password not permitted to contain white spaces"));
+            }
+
+            if (StringUtils.countOccurrencesOf(signUpRequest.getUserName(), " ") > 0) {
+                return ResponseEntity.badRequest().body(new CustomResponse<>(0, null, "Username not permitted to contain white spaces"));
+            }
+
+            if (signUpRequest.getUserName().length() < 5) {
+                return ResponseEntity.badRequest().body(new CustomResponse<>(0, null, "Incorrect username format"));
+            }
+
+            Optional<User> userOptional = userService.findUserByName(signUpRequest.getUserName());
+
+            if (userOptional.isPresent()) {
+                return ResponseEntity.badRequest().body(new CustomResponse<>(0, null, "User already exists"));
+            }
+
+            LocalDateTime time = LocalDateTime.now();
+            User user = new User();
+            user.setFullName(signUpRequest.getFullName());
+            user.setUserName(signUpRequest.getUserName());
+            user.setPassword(passwordEncoder.encode(signUpRequest.getPassword()));
+            user.setCreatedAt(time);
+
+            userService.createUser(user);
+
+            return  ResponseEntity.ok().body(new CustomResponse<>(1, null, "Success register"));
+        }catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body(new CustomResponse<>(0, e.getMessage(), null));
         }
 
     }

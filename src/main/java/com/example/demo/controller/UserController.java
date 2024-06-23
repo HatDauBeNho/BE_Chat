@@ -39,52 +39,6 @@ public class UserController {
     @Autowired
     FileStorageService fileStorageService;
 
-    @PostMapping("/signup")
-    @Transactional
-    public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpRequest signUpRequest, Errors errors){
-        try
-        {
-            if (errors.hasErrors()) {
-                return ResponseEntity.badRequest().body(new CustomResponse<>(0, null, "Incorrect password format"));
-            }
-            if (StringUtils.countOccurrencesOf(signUpRequest.getPassword(), " ") > 0) {
-                return ResponseEntity.badRequest().body(new CustomResponse<>(0, null, "Password not permitted to contain white spaces"));
-            }
-
-            if (StringUtils.countOccurrencesOf(signUpRequest.getUserName(), " ") > 0) {
-                return ResponseEntity.badRequest().body(new CustomResponse<>(0, null, "Username not permitted to contain white spaces"));
-            }
-
-            if (signUpRequest.getUserName().length() < 5) {
-                return ResponseEntity.badRequest().body(new CustomResponse<>(0, null, "Incorrect username format"));
-            }
-
-            Optional<User> userOptional = userService.findUserByName(signUpRequest.getUserName());
-
-            if (userOptional.isPresent()) {
-                return ResponseEntity.badRequest().body(new CustomResponse<>(0, null, "User already exists"));
-            }
-
-            LocalDateTime time = LocalDateTime.parse(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-            User user = new User();
-            user.setFullName(signUpRequest.getFullName());
-            user.setUserName(signUpRequest.getUserName());
-            user.setPassword(passwordEncoder.encode(signUpRequest.getPassword()));
-            user.setCreatedAt(time);
-
-            userService.createUser(user);
-
-            return  ResponseEntity.ok().body(new CustomResponse<>(1, null, "Success register"));
-        }catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.badRequest().body(new CustomResponse<>(0, e.getMessage(), null));
-        }
-
-    }
-
-
-
-
     @PostMapping("/updateUser")
     @Transactional
     public ResponseEntity<?> updateUser(@Valid @ModelAttribute UpdateUserRequest updateUserRequest,Errors errors)
