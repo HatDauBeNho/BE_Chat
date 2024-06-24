@@ -12,9 +12,7 @@ import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class MessageServiceImpl implements MessageService {
@@ -85,7 +83,20 @@ public class MessageServiceImpl implements MessageService {
                     list.add(friendResponse);
                 }
             }
-                return list;
+            Collections.sort(list, new Comparator<FriendResponse>() {
+                @Override
+                public int compare(FriendResponse o1, FriendResponse o2) {
+                    if (o1.getFullName()==null&&o2.getFullName()==null)
+                        return o1.getGroupName().compareTo(o2.getGroupName());
+                    if (o1.getFullName()!=null&&o2.getFullName()==null)
+                            return o1.getFullName().compareTo(o2.getGroupName());
+                    if (o1.getFullName()==null&&o2.getFullName()!=null)
+                        return o1.getGroupName().compareTo(o2.getFullName());
+                    return o1.getFullName().compareTo(o2.getFullName());
+
+                }
+            });
+            return list;
         } catch (Exception e) {
             throw new RuntimeException("Failed to get list friend response. Error: " + e.getMessage());
         }

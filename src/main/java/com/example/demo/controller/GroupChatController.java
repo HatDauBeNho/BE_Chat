@@ -51,31 +51,7 @@ public class GroupChatController {
                 return ResponseEntity.badRequest().body(new CustomResponse<>(0, null, "Group chat already exists"));
             }
 
-            LocalDateTime time = LocalDateTime.parse(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-            Group group=new Group();
-            group.setGroupName(createGroupRequest.getGroupName());
-            group.setAdmin(userService.findUserById(userDetails.getUserID()).get());
-            group.setCreatedAt(time);
 
-            groupChatService.createGroup(group);
-
-            GroupMember admin=new GroupMember();
-            admin.setGroup(group);
-            admin.setUser(userService.findUserById(userDetails.getUserID()).get());
-            admin.setCreatedAt(time);
-            groupMemberService.createGroupMember(admin);
-            for (Integer item:createGroupRequest.getMembers())
-            {
-                Optional<User> friendOptional= userService.findUserById(item);
-                if (friendOptional.isEmpty()) {
-                    return ResponseEntity.badRequest().body(new CustomResponse<>(0, null, "User is not exists"));
-                }
-                GroupMember groupMember=new GroupMember();
-                groupMember.setGroup(group);
-                groupMember.setUser(friendOptional.get());
-                groupMember.setCreatedAt(time);
-                groupMemberService.createGroupMember(groupMember);
-            }
             return  ResponseEntity.ok()
                     .body(new CustomResponse<>(
                             1,
@@ -127,7 +103,7 @@ public class GroupChatController {
                 return ResponseEntity.badRequest().body(new CustomResponse<>(0, null,"Group is not exits"));
             }
 
-            LocalDateTime time = LocalDateTime.parse(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+            LocalDateTime time = LocalDateTime.now();
             for (Integer item: request.getMembers())
             {
                 if (groupMemberService.findUserIdInOneGroup(request.getGroupId()).contains(item))

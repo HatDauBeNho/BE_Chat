@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.custom.group.request.CreateGroupRequest;
 import com.example.demo.entity.dao.GroupMember;
 
 import java.util.List;
@@ -11,4 +12,5 @@ public interface GroupMemberService {
     List<Integer> findUserIdInOneGroup(int groupId);
 
     void deleteGroupMember(int groupId,int userId);
+
 }

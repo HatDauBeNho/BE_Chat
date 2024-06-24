@@ -21,12 +21,11 @@ public class FileController {
     @Autowired
     private FileStorageService fileStorageService;
 
-    //Dang loi
-    @GetMapping(value = "/avatar/{avatarName}", produces = MediaType.IMAGE_JPEG_VALUE)
-    public ResponseEntity<?> getAvatar(@PathVariable("avatarName") String avatarName)
+    @GetMapping(value = "/avatar/{uuid}", produces = MediaType.IMAGE_JPEG_VALUE)
+    public ResponseEntity<?> getAvatar(@PathVariable("uuid") String uuid)
     {
         try {
-            Resource resource = resourceLoader.getResource("file:" + fileStorageService.getUrlAvatar() + "/" + avatarName);
+            Resource resource = resourceLoader.getResource("file:" + fileStorageService.getUrlAvatar() + "/" + uuid);
             if (resource.exists()){
                 return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(resource);
             }

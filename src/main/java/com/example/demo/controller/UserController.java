@@ -6,9 +6,11 @@ import com.example.demo.custom.users.request.UpdateUserRequest;
 import com.example.demo.custom.users.response.UserInforResponse;
 import com.example.demo.entity.dao.User;
 
+import com.example.demo.repository.UserRepository;
 import com.example.demo.security.service.UserDetailsImpl;
 
 import com.example.demo.service.FileStorageService;
+import com.example.demo.service.ImageService;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ResourceLoader;
@@ -25,19 +27,14 @@ import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("api/user")
 public class UserController {
     @Autowired
     private UserService userService;
-    @Autowired
-    PasswordEncoder passwordEncoder;
 
-    @Autowired
-    private ResourceLoader resourceLoader;
-    @Autowired
-    FileStorageService fileStorageService;
 
     @PostMapping("/updateUser")
     @Transactional
@@ -46,7 +43,7 @@ public class UserController {
         try
         {
             if (errors.hasErrors()) {
-                return ResponseEntity.badRequest().body(new CustomResponse<>(0, null, "Incorrect email format"));
+                return ResponseEntity.badRequest().body(new CustomResponse<>(0, null, "Incorrect input format"));
             }
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
@@ -54,14 +51,9 @@ public class UserController {
             if (userOptional.isPresent()) {
                 return ResponseEntity.badRequest().body(new CustomResponse<>(0, null, "Email already exists"));
             }
+            userService.updateUser(userDetails.getUserID(),updateUserRequest);
+            return ResponseEntity.ok().body(new CustomResponse<>(1, null, "Success update"));
 
-            if (userService.updateUser(
-                    userDetails.getUserID(),
-                    updateUserRequest.getFullName(),
-                    updateUserRequest.getAvatar(),
-                    updateUserRequest.getEmail())) return ResponseEntity.ok().body(new CustomResponse<>(1, null, "Success update"));
-
-            return ResponseEntity.badRequest().body(new CustomResponse<>(0, null,"Update failed"));
         }catch (Exception e)
         {
             e.printStackTrace();

@@ -8,6 +8,7 @@ import java.util.Optional;
 
 public interface MessageService {
     Optional<MessageHandle> lastFriendMessage(int id1, int id2);
+
     Optional<MessageHandle> lastGroupMessage(int groupId);
 
     List<FriendResponse> getListFriendResponse(int userID);

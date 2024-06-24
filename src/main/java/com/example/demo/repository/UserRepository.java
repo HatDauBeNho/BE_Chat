@@ -30,4 +30,7 @@ public interface UserRepository extends JpaRepository<User,Integer> {
 
     @Query(value = "GET userName,fullName,avatar FROM users where userId=?1",nativeQuery = true)
     Optional<User> getUserInfor(int userId);
+
+    @Query(value = "SELECT * FROM users WHERE userId = ?1 AND avatar IS NOT NULL LIMIT 1",nativeQuery = true)
+    Optional<User> findByIdWithAvatar(int id);
 }

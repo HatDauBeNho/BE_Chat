@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.custom.group.handle.UserNotInGroupHandle;
+import com.example.demo.custom.group.request.CreateGroupRequest;
 import com.example.demo.entity.dao.Group;
 
 import java.util.List;
@@ -17,4 +18,5 @@ public interface GroupChatService {
 
     Optional<Group> findByGroupId(int groupId);
 
+    Group saveGroupAndGroupMember(int userId, CreateGroupRequest createGroupRequest);
 }

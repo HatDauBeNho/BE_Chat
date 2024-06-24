@@ -25,6 +25,7 @@ public class GroupMember extends BaseEntity {
     @JoinColumn(name = "userId",nullable = false)
     private User user;
 
+
     public int getGroupMemberId() {
         return groupMemberId;
     }
