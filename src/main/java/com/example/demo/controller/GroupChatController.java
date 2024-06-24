@@ -20,7 +20,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -50,14 +51,27 @@ public class GroupChatController {
             if (groupOptional.isPresent()) {
                 return ResponseEntity.badRequest().body(new CustomResponse<>(0, null, "Group chat already exists"));
             }
+            if (createGroupRequest.getMembers().size()<3)
+                return ResponseEntity.badRequest().body(new CustomResponse<>(0, null, "Group chat must have more than 2 people"));
+            List<Integer> a=createGroupRequest.getMembers();
+            for (int i=0;i<a.size();i++)
+            {
+                if (a.get(i)==userDetails.getUserID()) return ResponseEntity.badRequest().body(new CustomResponse<>(0, null, "No duplicate users"));
+                for (int j=i+1;j<a.size();j++)
+                {
+                    if (a.get(j)==a.get(i)) return ResponseEntity.badRequest().body(new CustomResponse<>(0, null, "No duplicate users"));
 
-
+                }
+                if (userService.findUserById(a.get(i)).isEmpty())
+                    return ResponseEntity.badRequest().body(new CustomResponse<>(0, null, "User have not exist"));
+            }
+            Group group=groupChatService.saveGroupAndGroupMember(userDetails.getUserID(),createGroupRequest);
             return  ResponseEntity.ok()
                     .body(new CustomResponse<>(
                             1,
                             new CreateGroupResponse(
                                     group.getGroupID(),group.getGroupName(),group.getAdmin().getUserId(),
-                                    groupMemberService.findUserIdInOneGroup(group.getGroupID()),time
+                                    groupMemberService.findUserIdInOneGroup(group.getGroupID()),LocalDateTime.now()
                             ),
                             "Success create group")
                     );

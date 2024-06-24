@@ -72,16 +72,15 @@ public class GroupChatServiceImpl implements GroupChatService {
         for (Integer item:createGroupRequest.getMembers())
         {
             Optional<User> friendOptional= userRepository.findById(item);
-            if (friendOptional.isEmpty()) {
-                return false;
+            if (friendOptional.isPresent()) {
+                GroupMember groupMember=new GroupMember();
+                groupMember.setGroup(group);
+                groupMember.setUser(friendOptional.get());
+                groupMember.setCreatedAt(time);
+                groupMemberRepository.save(groupMember);
             }
-            GroupMember groupMember=new GroupMember();
-            groupMember.setGroup(group);
-            groupMember.setUser(friendOptional.get());
-            groupMember.setCreatedAt(time);
-            groupMemberRepository.save(groupMember);
         }
-        return true;
+        return group;
     }
 
 }
