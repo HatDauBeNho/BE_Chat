@@ -1,6 +1,9 @@
 package com.example.demo.custom.group.request;
 
+import lombok.Data;
+
 import java.util.List;
+@Data
 
 public class MemberAndGroupActionRequest {
     private int groupId;

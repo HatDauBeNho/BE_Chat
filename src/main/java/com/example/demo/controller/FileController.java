@@ -21,20 +21,18 @@ public class FileController {
     @Autowired
     private FileStorageService fileStorageService;
 
-    @GetMapping(value = "/avatar/{uuid}", produces = MediaType.IMAGE_JPEG_VALUE)
-    public ResponseEntity<?> getAvatar(@PathVariable("uuid") String uuid)
+    @GetMapping(value = "/avatar/{id}", produces = MediaType.IMAGE_JPEG_VALUE)
+    public ResponseEntity<?> getAvatar(@PathVariable("id") String id)
     {
         try {
-            Resource resource = resourceLoader.getResource("file:" + fileStorageService.getUrlAvatar() + "/" + uuid);
+            Resource resource = resourceLoader.getResource("file:" + fileStorageService.getUrlAvatar() + "/" + id);
             if (resource.exists()){
                 return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(resource);
             }
             return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(null);
-
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.badRequest().body(new CustomResponse<>(0, null, e.getMessage()));
         }
     }
-
 }

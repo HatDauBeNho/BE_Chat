@@ -1,6 +1,8 @@
 package com.example.demo.entity.dao;
 
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
@@ -9,7 +11,8 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "groupMembers")
-
+@Data
+@AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
 public class GroupMember extends BaseEntity {
     @Id
@@ -26,27 +29,5 @@ public class GroupMember extends BaseEntity {
     private User user;
 
 
-    public int getGroupMemberId() {
-        return groupMemberId;
-    }
 
-    public void setGroupMemberId(int groupMemberId) {
-        this.groupMemberId = groupMemberId;
-    }
-
-    public Group getGroup() {
-        return group;
-    }
-
-    public void setGroup(Group group) {
-        this.group = group;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
 }

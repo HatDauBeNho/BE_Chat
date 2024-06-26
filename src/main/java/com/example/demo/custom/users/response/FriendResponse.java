@@ -1,6 +1,9 @@
 package com.example.demo.custom.users.response;
 
+import lombok.Data;
+
 import java.time.LocalDateTime;
+@Data
 
 public class FriendResponse {
     private String content;

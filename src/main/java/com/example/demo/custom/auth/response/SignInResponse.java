@@ -1,8 +1,11 @@
 package com.example.demo.custom.auth.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
-
+@Data
+@AllArgsConstructor
 public class SignInResponse {
     @JsonProperty(value = "token")
     private String token;
@@ -13,10 +16,5 @@ public class SignInResponse {
     @JsonProperty(value = "avatar")
     private String avatar;
 
-    public SignInResponse(String token, String userName, String fullName, String avatar) {
-        this.token = token;
-        this.userName = userName;
-        this.fullName = fullName;
-        this.avatar = avatar;
-    }
+
 }

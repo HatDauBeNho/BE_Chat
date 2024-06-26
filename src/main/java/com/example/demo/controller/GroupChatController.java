@@ -48,11 +48,14 @@ public class GroupChatController {
             Optional<Group> groupOptional= groupChatService.findByGroupName((createGroupRequest.getGroupName()));
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+
             if (groupOptional.isPresent()) {
                 return ResponseEntity.badRequest().body(new CustomResponse<>(0, null, "Group chat already exists"));
             }
+
             if (createGroupRequest.getMembers().size()<3)
                 return ResponseEntity.badRequest().body(new CustomResponse<>(0, null, "Group chat must have more than 2 people"));
+
             List<Integer> a=createGroupRequest.getMembers();
             for (int i=0;i<a.size();i++)
             {
@@ -65,13 +68,14 @@ public class GroupChatController {
                 if (userService.findUserById(a.get(i)).isEmpty())
                     return ResponseEntity.badRequest().body(new CustomResponse<>(0, null, "User have not exist"));
             }
+
             Group group=groupChatService.saveGroupAndGroupMember(userDetails.getUserID(),createGroupRequest);
             return  ResponseEntity.ok()
                     .body(new CustomResponse<>(
                             1,
                             new CreateGroupResponse(
-                                    group.getGroupID(),group.getGroupName(),group.getAdmin().getUserId(),
-                                    groupMemberService.findUserIdInOneGroup(group.getGroupID()),LocalDateTime.now()
+                                    group.getGroupId(),group.getGroupName(),group.getAdmin().getUserId(),
+                                    groupMemberService.findUserIdInOneGroup(group.getGroupId()),LocalDateTime.now()
                             ),
                             "Success create group")
                     );
