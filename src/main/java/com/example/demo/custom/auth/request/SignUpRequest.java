@@ -13,7 +13,7 @@ public class SignUpRequest {
     @Pattern(regexp = "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-.]).{8,24}$")
     private String password;
 
-    @Pattern(regexp = "^[a-zA-Z]{5,50}$")
+    @Pattern(regexp = "^[a-zA-Z ]{5,50}$")
     private String fullName;
 
 

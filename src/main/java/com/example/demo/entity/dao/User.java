@@ -2,6 +2,7 @@ package com.example.demo.entity.dao;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
@@ -9,6 +10,7 @@ import javax.persistence.*;
 @Table(name = "users")
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class User  extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

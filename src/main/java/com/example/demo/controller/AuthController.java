@@ -70,6 +70,7 @@ public class AuthController {
         try
         {
             if (errors.hasErrors()) {
+                System.out.println(errors.getAllErrors());
                 return ResponseEntity.badRequest().body(new CustomResponse<>(0, null, "Incorrect password format"));
             }
             if (StringUtils.countOccurrencesOf(signUpRequest.getPassword(), " ") > 0) {

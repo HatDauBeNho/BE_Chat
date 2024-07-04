@@ -42,7 +42,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     protected void configure(HttpSecurity http) throws Exception
     {
         http.authorizeHttpRequests().antMatchers("/api/auth/signin").permitAll()
-                .and().authorizeHttpRequests().antMatchers("/api/user/signup").permitAll()
+                .and().authorizeHttpRequests().antMatchers("/api/auth/signup").permitAll()
                 .and().authorizeHttpRequests().antMatchers("/api/user/**").hasAnyAuthority("ROLE_USER")
                 .and().authorizeHttpRequests().antMatchers("/api/message/**").hasAnyAuthority("ROLE_USER")
                 .anyRequest().authenticated()
