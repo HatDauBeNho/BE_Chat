@@ -11,6 +11,7 @@ import com.example.demo.repository.GroupMemberRepository;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.service.GroupChatService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -29,8 +30,12 @@ public class GroupChatServiceImpl implements GroupChatService {
     @Autowired
     GroupMemberRepository groupMemberRepository;
 
+    @Autowired
+    private RedisTemplate<String,Group> redisTemplate;
+
     @Override
     public Group createGroup(Group group) {
+
         return groupChatRepository.save(group);
     }
 

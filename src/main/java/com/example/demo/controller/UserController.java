@@ -14,6 +14,7 @@ import com.example.demo.service.ImageService;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ResourceLoader;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -68,6 +69,8 @@ public class UserController {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
             Optional<User> userOptional = userService.findUserByName(userDetails.getUsername());
+
+
             if (userOptional.isPresent())
             {
                 return ResponseEntity.ok()

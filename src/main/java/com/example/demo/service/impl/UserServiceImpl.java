@@ -3,6 +3,7 @@ package com.example.demo.service.impl;
 import com.example.demo.custom.message.handle.MessageHandle;
 import com.example.demo.custom.users.handle.FriendInforHandle;
 import com.example.demo.custom.users.request.UpdateUserRequest;
+import com.example.demo.custom.users.response.UserInforResponse;
 import com.example.demo.entity.dao.Image;
 import com.example.demo.entity.dao.User;
 import com.example.demo.custom.users.response.FriendResponse;
@@ -13,8 +14,11 @@ import com.example.demo.service.ImageService;
 import com.example.demo.service.UserService;
 import net.bytebuddy.asm.Advice;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
+import javax.swing.text.html.Option;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -32,7 +36,13 @@ public class UserServiceImpl implements UserService {
     FileStorageService fileStorageService;
 
     @Override
-    public Optional<User> findUserByName(String name) {
+    public User createUser(User user) {
+        return userRepository.save(user);
+    }
+
+    @Override
+    public Optional<User> findUserByName(String name)
+    {
         return userRepository.findByUsername(name);
     }
 
@@ -83,10 +93,7 @@ public class UserServiceImpl implements UserService {
         return userRepository.findAll();
     }
 
-    @Override
-    public User createUser(User user) {
-        return userRepository.save(user);
-    }
+
 
     @Override
     public List<FriendInforHandle> listFriend(int id) {
