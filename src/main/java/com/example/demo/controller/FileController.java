@@ -21,7 +21,7 @@ public class FileController {
     @Autowired
     private FileStorageService fileStorageService;
 
-    @GetMapping(value = "/avatar/{id}", produces = MediaType.IMAGE_JPEG_VALUE)
+    @GetMapping(value = "/avatar/{id}", produces = {MediaType.IMAGE_JPEG_VALUE,MediaType.IMAGE_JPEG_VALUE})
     public ResponseEntity<?> getAvatar(@PathVariable("id") String id)
     {
         try {

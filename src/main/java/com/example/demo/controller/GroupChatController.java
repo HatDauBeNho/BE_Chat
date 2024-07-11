@@ -9,6 +9,7 @@ import com.example.demo.entity.dao.GroupMember;
 import com.example.demo.entity.dao.User;
 import com.example.demo.repository.GroupMemberRepository;
 import com.example.demo.security.service.UserDetailsImpl;
+import com.example.demo.service.GroupChatETDService;
 import com.example.demo.service.GroupChatService;
 import com.example.demo.service.GroupMemberService;
 import com.example.demo.service.UserService;
@@ -39,6 +40,9 @@ public class GroupChatController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private GroupChatETDService groupChatETDService;
+
     @PostMapping("/createGroup")
     @Transactional
     public ResponseEntity<?> createGroupChat(@RequestBody CreateGroupRequest createGroupRequest)
@@ -53,7 +57,7 @@ public class GroupChatController {
                 return ResponseEntity.badRequest().body(new CustomResponse<>(0, null, "Group chat already exists"));
             }
 
-            if (createGroupRequest.getMembers().size()<3)
+            if (createGroupRequest.getMembers().size()<2)
                 return ResponseEntity.badRequest().body(new CustomResponse<>(0, null, "Group chat must have more than 2 people"));
 
             List<Integer> a=createGroupRequest.getMembers();
@@ -90,6 +94,7 @@ public class GroupChatController {
     @GetMapping("/group/{groupId}")
     public ResponseEntity<?> getListFriendNotInGroup(@PathVariable("groupId") Integer groupId)
     {
+        System.out.println("Danh sach cac nhom:"+groupChatETDService.findAll());
         try
         {
            Optional<Group> optionalGroup=groupChatService.findByGroupId(groupId);
@@ -101,7 +106,7 @@ public class GroupChatController {
                     .body(new CustomResponse<>(
                             1,
                             groupChatService.getListFriendNotInGroup(groupId),
-                            "Success get list friend not in group")
+                            "Success get list friend not in group abc"+groupChatETDService.findAll())
                     );
         }catch (Exception e) {
             e.printStackTrace();

@@ -30,9 +30,6 @@ public class GroupChatServiceImpl implements GroupChatService {
     @Autowired
     GroupMemberRepository groupMemberRepository;
 
-    @Autowired
-    private RedisTemplate<String,Group> redisTemplate;
-
     @Override
     public Group createGroup(Group group) {
 

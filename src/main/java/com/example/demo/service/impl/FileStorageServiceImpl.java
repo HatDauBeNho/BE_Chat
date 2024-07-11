@@ -6,6 +6,7 @@ import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.w3c.dom.ls.LSOutput;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -31,10 +32,10 @@ public class FileStorageServiceImpl implements FileStorageService {
     @Override
     public boolean saveAvatar(MultipartFile file, String uuid) throws UnsupportedEncodingException {
         initAvatarResources();
+//        String fileName=uuid+ file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
         try (OutputStream outputStream = Files.newOutputStream(pathFile.getPathAvatar().resolve(uuid));
              InputStream inputStream = file.getInputStream()) {
             IOUtils.copy(inputStream, outputStream);
-
             return true;
         } catch (IOException e) {
             throw new RuntimeException("Could not save the file. Error: " + e.getMessage());

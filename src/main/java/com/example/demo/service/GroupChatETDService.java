@@ -1,5 +1,8 @@
 package com.example.demo.service;
 
-public interface GroupChatETDService {
+import com.example.demo.etd.GroupChatETD;
+
+public interface GroupChatETDService extends Generate<GroupChatETD> {
+
 
 }

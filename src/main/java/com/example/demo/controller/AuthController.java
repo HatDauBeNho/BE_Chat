@@ -88,7 +88,7 @@ public class AuthController {
             Optional<User> userOptional = userService.findUserByName(signUpRequest.getUserName());
 
             if (userOptional.isPresent()) {
-                return ResponseEntity.badRequest().body(new CustomResponse<>(0, null, "User already exists"));
+                return ResponseEntity.badRequest().body(new CustomResponse<>(0, null, "User already existss"));
             }
 
             LocalDateTime time = LocalDateTime.now();
