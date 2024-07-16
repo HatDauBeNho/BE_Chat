@@ -4,8 +4,10 @@ import com.example.demo.entity.dao.User;
 import com.example.demo.custom.auth.response.CustomResponse;
 import com.example.demo.custom.auth.request.SignInRequest;
 import com.example.demo.custom.auth.response.SignInResponse;
+import com.example.demo.etd.UserETD;
 import com.example.demo.security.jwt.JwtUtils;
 import com.example.demo.security.service.UserDetailsImpl;
+import com.example.demo.service.UserETDService;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -36,6 +38,9 @@ public class AuthController {
     private UserService  userService;
     @Autowired
     JwtUtils jwtUtils;
+
+    @Autowired
+    private UserETDService userETDService;
 
     @PostMapping("/signin")
     @Transactional
@@ -88,7 +93,7 @@ public class AuthController {
             Optional<User> userOptional = userService.findUserByName(signUpRequest.getUserName());
 
             if (userOptional.isPresent()) {
-                return ResponseEntity.badRequest().body(new CustomResponse<>(0, null, "User already existss"));
+                return ResponseEntity.badRequest().body(new CustomResponse<>(0, null, "User already exists"));
             }
 
             LocalDateTime time = LocalDateTime.now();
@@ -98,8 +103,11 @@ public class AuthController {
             user.setPassword(passwordEncoder.encode(signUpRequest.getPassword()));
             user.setCreatedAt(time);
 
-            userService.createUser(user);
 
+            UserETD userETD=new UserETD( userService.createUser(user).getUserId(),user);
+
+            userETDService.save(userETD);
+            System.out.println("DANH SACH DUOC LUU VAO REDIS"+userETDService.findAll());
             return  ResponseEntity.ok().body(new CustomResponse<>(1, null, "Success register"));
         }catch (Exception e) {
             e.printStackTrace();
